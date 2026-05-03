@@ -1,0 +1,334 @@
+:root {
+  --bg-color: #050505;
+  --text-primary: #e0e0e0;
+  --text-secondary: #9aa0a6;
+  --accent-color: #ff3366;
+  --panel-bg: rgba(20, 20, 25, 0.65);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --flame-base: #ff5500;
+  --flame-core: #ffbb00;
+  --flame-glow: rgba(255, 80, 0, 0.4);
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Background Wrapper */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  padding: 20px;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Fallback or placeholder, user mentioned they will upload personal photo */
+  background-image: url('GRADUATION.jpg');
+  /* Adjust the second value (e.g., 20%, 30%) to shift the image up or down */
+  /* Higher percentage pushes the image UP, cropping more off the top */
+  background-position: center 20%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -2;
+  transition: all 0.5s ease;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(8, 8, 12, 0.6);
+  /* Darker overlay for readability */
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: -1;
+}
+
+/* Common UI Elements */
+.glass-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  width: 100%;
+}
+
+.glass-panel h2 {
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+  color: #fff;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-field {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--panel-border);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  margin-bottom: 16px;
+}
+
+.input-field:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(255, 51, 102, 0.25);
+}
+
+.btn {
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn:hover {
+  background: #ff4d79;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--panel-border);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Typography Utilities */
+.text-gradient {
+  background: linear-gradient(90deg, #fff, #aaa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.flame-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Hearts Animation */
+.hearts-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -50px;
+  color: rgba(255, 182, 193, 0.2);
+  /* Soft pink, semi-transparent */
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(-110vh) scale(1.2) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Flame Animations */
+@keyframes flameFlicker {
+  0% {
+    transform: scale(1) rotate(-1deg);
+  }
+
+  50% {
+    transform: scale(1.02) rotate(1deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(-1deg);
+  }
+}
+
+@keyframes glowPulseSmall {
+  0% {
+    filter: drop-shadow(0 0 5px var(--flame-glow));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 15px var(--flame-glow));
+  }
+
+  100% {
+    filter: drop-shadow(0 0 5px var(--flame-glow));
+  }
+}
+
+@keyframes glowPulseMedium {
+  0% {
+    filter: drop-shadow(0 0 15px var(--flame-glow));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 35px var(--flame-glow));
+  }
+
+  100% {
+    filter: drop-shadow(0 0 15px var(--flame-glow));
+  }
+}
+
+@keyframes glowPulseLarge {
+  0% {
+    filter: drop-shadow(0 0 30px #ff3300);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 60px #ff3300);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 30px #ff3300);
+  }
+}
+
+.flame-svg {
+  transform-origin: bottom center;
+  transition: all 0.5s ease;
+}
+
+.flame-streak-small {
+  animation: flameFlicker 2s ease-in-out infinite, glowPulseSmall 3s ease-in-out infinite;
+  transform: scale(0.6);
+}
+
+.flame-streak-medium {
+  animation: flameFlicker 1.5s ease-in-out infinite, glowPulseMedium 2s ease-in-out infinite;
+  transform: scale(1);
+}
+
+.flame-streak-large {
+  animation: flameFlicker 1s ease-in-out infinite, glowPulseLarge 1.5s ease-in-out infinite;
+  transform: scale(1.5);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+}
+
+.stat-value {
+  font-weight: 600;
+  color: #fff;
+}
+
+.streak-display {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 10px;
+  color: var(--flame-core);
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 187, 0, 0.5);
+}
